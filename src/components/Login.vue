@@ -3,7 +3,7 @@
     <div class="login_box">
       <!-- 头像区域 -->
       <div class="avatar_box">
-        <img src="../assets/logo.png" alt />
+        <img src="../assets/img/logo.png" alt />
       </div>
       <!-- 登录表单区域 -->
       <el-form
@@ -63,9 +63,10 @@ export default {
       this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return
         const { data: res } = await this.$http.post('login', this.loginForm)
-        if (res.meta.status !== 200)
+        if (res.meta.status !== 200) {
           // $message 是弹框信息
           return this.$message.error('用户名或密码错误！')
+        }
         this.$message.success('登录成功！')
         // 把token保存在sessionStorage中，只在当前网站打开时有效
         window.sessionStorage.setItem('token', res.data.token)
