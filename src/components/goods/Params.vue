@@ -19,7 +19,7 @@
             :options="catelist"
             :props="{ expandTrigger: 'hover',value:'cat_id',label:'cat_name',children:'children' }"
             @change="handleChange"
-            @focus="mutationObserver"
+            @visible-change="mutationObserver"
           ></el-cascader>
         </el-col>
       </el-row>

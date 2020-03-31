@@ -89,7 +89,7 @@
                     expandTrigger:'hover',
                     checkStrictly:true}"
             @change="parentCateChanged"
-            @focus="mutationObserver"
+            @visible-change="mutationObserver"
             clearable
           ></el-cascader>
         </el-form-item>
