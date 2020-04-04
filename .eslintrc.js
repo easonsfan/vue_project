@@ -30,7 +30,7 @@ module.exports = {
     '@vue/standard'
   ],
 
-  'extends': [
+  extends: [
     'plugin:vue/essential',
     '@vue/standard'
   ]

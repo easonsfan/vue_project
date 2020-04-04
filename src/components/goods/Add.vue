@@ -115,21 +115,11 @@ export default {
         attrs: []
       },
       addFormRules: {
-        goods_name: [
-          { required: true, message: '请输入商品名称', trigger: 'blur' }
-        ],
-        goods_price: [
-          { required: true, message: '请输入商品价格', trigger: 'blur' }
-        ],
-        goods_weight: [
-          { required: true, message: '请输入商品重量', trigger: 'blur' }
-        ],
-        goods_number: [
-          { required: true, message: '请输入商品重量', trigger: 'blur' }
-        ],
-        goods_cat: [
-          { required: true, message: '请输入商品分类', trigger: 'blur' }
-        ]
+        goods_name: [{ required: true, message: '请输入商品名称', trigger: 'blur' }],
+        goods_price: [{ required: true, message: '请输入商品价格', trigger: 'blur' }],
+        goods_weight: [{ required: true, message: '请输入商品重量', trigger: 'blur' }],
+        goods_number: [{ required: true, message: '请输入商品重量', trigger: 'blur' }],
+        goods_cat: [{ required: true, message: '请输入商品分类', trigger: 'blur' }]
       },
       catelist: [],
       manyTableData: [],
@@ -147,21 +137,6 @@ export default {
     this.getCateList()
   },
   methods: {
-    // 监听DOM元素变化,然后给级联选择器添加样式
-    mutationObserver() {
-      const observer = new MutationObserver((mutations, observer) => {
-        const popper = mutations[0].addedNodes[0]
-        const panel = document.querySelector('.el-cascader-panel')
-        // 第一次渲染dom元素，跳过if语句，先设置样式
-        // 之后dom元素会一直存在，不需要再设置样式，进入if
-        if (this.isExisting) return
-        this.isExisting = true
-        panel.style.height = 400 + 'px'
-        popper.style.height = 400 + 'px'
-        popper.style.top = 332 + 'px'
-      })
-      observer.observe(document.body, { childList: true })
-    },
     async getCateList() {
       const { data: res } = await this.$http.get('categories')
       if (res.meta.status !== 200) {
@@ -183,27 +158,20 @@ export default {
     async tabClicked() {
       // 证明访问的是动态参数面板
       if (this.activeIndex === '1') {
-        const { data: res } = await this.$http.get(
-          `categories/${this.cateId}/attributes`,
-          {
-            params: { sel: 'many' }
-          }
-        )
+        const { data: res } = await this.$http.get(`categories/${this.cateId}/attributes`, {
+          params: { sel: 'many' }
+        })
         if (res.meta.status !== 200) {
           return this.$message.error('获取动态参数列表失败！')
         }
         res.data.forEach(item => {
-          item.attr_vals =
-            item.attr_vals.length === 0 ? [] : item.attr_vals.split(' ')
+          item.attr_vals = item.attr_vals.length === 0 ? [] : item.attr_vals.split(' ')
         })
         this.manyTableData = res.data
       } else if (this.activeIndex === '2') {
-        const { data: res } = await this.$http.get(
-          `categories/${this.cateId}/attributes`,
-          {
-            params: { sel: 'only' }
-          }
-        )
+        const { data: res } = await this.$http.get(`categories/${this.cateId}/attributes`, {
+          params: { sel: 'only' }
+        })
         if (res.meta.status !== 200) {
           return this.$message.error('获取静态属性失败！')
         }

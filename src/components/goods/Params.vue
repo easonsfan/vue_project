@@ -184,16 +184,12 @@ export default {
       addDialogVisible: false,
       addForm: { attr_name: '' },
       addFormRules: {
-        attr_name: [
-          { required: true, message: '请输入参数名称', trigger: 'blur' }
-        ]
+        attr_name: [{ required: true, message: '请输入参数名称', trigger: 'blur' }]
       },
       editDialogVisible: false,
       editForm: {},
       editFormRules: {
-        attr_name: [
-          { required: true, message: '请输入参数名称', trigger: 'blur' }
-        ]
+        attr_name: [{ required: true, message: '请输入参数名称', trigger: 'blur' }]
       },
       inputVisible: false,
       inputValue: ''
@@ -203,21 +199,6 @@ export default {
     this.getCateList()
   },
   methods: {
-    // 监听DOM元素变化,然后给级联选择器添加样式
-    mutationObserver() {
-      const observer = new MutationObserver((mutations, observer) => {
-        const popper = mutations[0].addedNodes[0]
-        const panel = document.querySelector('.el-cascader-panel')
-        // 第一次渲染dom元素，跳过if语句，先设置样式
-        // 之后dom元素会一直存在，不需要再设置样式，进入if
-        if (this.isExisting) return
-        this.isExisting = true
-        panel.style.height = 400 + 'px'
-        popper.style.height = 400 + 'px'
-        popper.style.top = 221 + 'px'
-      })
-      observer.observe(document.body, { childList: true })
-    },
     async getCateList() {
       const { data: res } = await this.$http.get('categories')
       if (res.meta.status !== 200) {
@@ -240,12 +221,9 @@ export default {
         this.onlyTableData = []
         return
       }
-      const { data: res } = await this.$http.get(
-        `categories/${this.cateId}/attributes`,
-        {
-          params: { sel: this.activeName }
-        }
-      )
+      const { data: res } = await this.$http.get(`categories/${this.cateId}/attributes`, {
+        params: { sel: this.activeName }
+      })
       if (res.meta.status !== 200) {
         return this.$message.error('获取参数失败！')
       }
@@ -268,13 +246,10 @@ export default {
     addParams() {
       this.$refs.addFormRef.validate(async valid => {
         if (!valid) return
-        const { data: res } = await this.$http.post(
-          `categories/${this.cateId}/attributes`,
-          {
-            attr_name: this.addForm.attr_name,
-            attr_sel: this.activeName
-          }
-        )
+        const { data: res } = await this.$http.post(`categories/${this.cateId}/attributes`, {
+          attr_name: this.addForm.attr_name,
+          attr_sel: this.activeName
+        })
         if (res.meta.status !== 201) {
           return this.$message.error(`添加${this.titleText}失败！`)
         }
@@ -284,12 +259,9 @@ export default {
       })
     },
     async showEditDialog(id) {
-      const { data: res } = await this.$http.get(
-        `categories/${this.cateId}/attributes/${id}`,
-        {
-          params: { attr_sel: this.activeName }
-        }
-      )
+      const { data: res } = await this.$http.get(`categories/${this.cateId}/attributes/${id}`, {
+        params: { attr_sel: this.activeName }
+      })
       if (res.meta.status !== 200) {
         return this.$message.error('获取参数失败！')
       }
@@ -302,13 +274,10 @@ export default {
     editParams() {
       this.$refs.editFormRef.validate(async valid => {
         if (!valid) return
-        const { data: res } = await this.$http.put(
-          `categories/${this.cateId}/attributes/${this.editForm.attr_id}`,
-          {
-            attr_name: this.editForm.attr_name,
-            attr_sel: this.activeName
-          }
-        )
+        const { data: res } = await this.$http.put(`categories/${this.cateId}/attributes/${this.editForm.attr_id}`, {
+          attr_name: this.editForm.attr_name,
+          attr_sel: this.activeName
+        })
         if (res.meta.status !== 200) {
           return this.$message.error(`修改${this.titleText}失败！`)
         }
@@ -318,21 +287,15 @@ export default {
       })
     },
     async removeParams(id) {
-      const confirmResult = await this.$confirm(
-        '此操作将永久删除该参数, 是否继续?',
-        '提示',
-        {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }
-      ).catch(err => err)
+      const confirmResult = await this.$confirm('此操作将永久删除该参数, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).catch(err => err)
       if (confirmResult !== 'confirm') {
         return this.$message.info('已取消删除')
       }
-      const { data: res } = await this.$http.delete(
-        `categories/${this.cateId}/attributes/${id}`
-      )
+      const { data: res } = await this.$http.delete(`categories/${this.cateId}/attributes/${id}`)
       if (res.meta.status !== 200) {
         return this.$message.error('删除失败！')
       }
@@ -361,14 +324,11 @@ export default {
       this.saveAttrVals(row)
     },
     async saveAttrVals(row) {
-      const { data: res } = await this.$http.put(
-        `categories/${this.cateId}/attributes/${row.attr_id}`,
-        {
-          attr_name: row.attr_name,
-          attr_sel: row.attr_sel,
-          attr_vals: row.attr_vals.join(' ')
-        }
-      )
+      const { data: res } = await this.$http.put(`categories/${this.cateId}/attributes/${row.attr_id}`, {
+        attr_name: row.attr_name,
+        attr_sel: row.attr_sel,
+        attr_vals: row.attr_vals.join(' ')
+      })
       if (res.meta.status !== 200) {
         return this.$message.error('修改参数失败！')
       }

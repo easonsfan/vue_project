@@ -15,7 +15,7 @@ body,
 }
 
 .el-card {
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15)!important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
 }
 
 .el-row {
@@ -32,4 +32,12 @@ body,
 
 .ql-editor {
   min-height: 300px
+}
+
+.el-popper[x-placement^='bottom'] {
+  height: 400px;
+}
+
+.el-cascader-panel {
+  height: 400px;
 }

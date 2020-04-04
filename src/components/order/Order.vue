@@ -107,12 +107,8 @@ export default {
         address2: ''
       },
       addressFormRules: {
-        address1: [
-          { required: true, message: '请选择省市区县', trigger: 'blur' }
-        ],
-        address2: [
-          { required: true, message: '请填写详细地址', trigger: 'blur' }
-        ]
+        address1: [{ required: true, message: '请选择省市区县', trigger: 'blur' }],
+        address2: [{ required: true, message: '请填写详细地址', trigger: 'blur' }]
       },
       cityData,
       progressVisible: false,
@@ -123,21 +119,6 @@ export default {
     this.getOrderList()
   },
   methods: {
-    // 监听DOM元素变化,然后给级联选择器添加样式
-    mutationObserver() {
-      const observer = new MutationObserver((mutations, observer) => {
-        const popper = mutations[0].addedNodes[0]
-        const panel = document.querySelector('.el-cascader-panel')
-        // 第一次渲染dom元素，跳过if语句，先设置样式
-        // 之后dom元素会一直存在，不需要再设置样式，进入if
-        if (this.isExisting) return
-        this.isExisting = true
-        panel.style.height = 400 + 'px'
-        popper.style.height = 400 + 'px'
-        popper.style.top = 264 + 'px'
-      })
-      observer.observe(document.body, { childList: true })
-    },
     async getOrderList() {
       const { data: res } = await this.$http.get('orders', {
         params: this.queryInfo
